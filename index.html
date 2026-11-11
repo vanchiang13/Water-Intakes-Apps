@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f8f5">
+    <meta name="description" content="A gentle daily water tracker with reminders.">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Sip — Daily water tracker</title>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Sip home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><path d="M16 3.5S6.8 14 6.8 20.7a9.2 9.2 0 0 0 18.4 0C25.2 14 16 3.5 16 3.5Z"/><path d="M11.5 21.3a4.7 4.7 0 0 0 4.7 4.7"/></svg>
+          </span>
+          <span>sip<span class="brand-period">.</span></span>
+        </a>
+        <div class="topbar-actions">
+          <span class="today-label" id="today-label"></span>
+          <button class="icon-button" id="settings-button" type="button" aria-label="Open settings" title="Settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="m19.4 15 .1.1a1.8 1.8 0 1 1-2.5 2.5l-.1-.1a1.8 1.8 0 0 0-3 .9v.2a1.8 1.8 0 1 1-3.6 0v-.2a1.8 1.8 0 0 0-3-.9l-.1.1a1.8 1.8 0 1 1-2.5-2.5l.1-.1a1.8 1.8 0 0 0-.9-3h-.2a1.8 1.8 0 1 1 0-3.6h.2a1.8 1.8 0 0 0 .9-3l-.1-.1a1.8 1.8 0 1 1 2.5-2.5l.1.1a1.8 1.8 0 0 0 3-.9v-.2a1.8 1.8 0 1 1 3.6 0v.2a1.8 1.8 0 0 0 3 .9l.1-.1a1.8 1.8 0 1 1 2.5 2.5l-.1.1a1.8 1.8 0 0 0 .9 3h.2a1.8 1.8 0 1 1 0 3.6h-.2a1.8 1.8 0 0 0-.9 3Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="welcome-row">
+          <div>
+            <p class="eyebrow">YOUR DAILY RESET</p>
+            <h1>A little water,<br><span>a lot of good.</span></h1>
+          </div>
+          <div class="sun-doodle" aria-hidden="true">
+            <span class="sun"></span>
+            <span class="sun-ray ray-one"></span><span class="sun-ray ray-two"></span>
+            <span class="sun-ray ray-three"></span><span class="sun-ray ray-four"></span>
+          </div>
+        </section>
+
+        <section class="dashboard" aria-label="Today's hydration">
+          <article class="progress-card">
+            <div class="progress-copy">
+              <p class="eyebrow">TODAY'S INTAKE</p>
+              <p class="amount"><span id="consumed">0</span><span class="amount-unit"> ml</span></p>
+              <p class="goal-copy">of <span id="goal-label">2,000</span> ml daily goal</p>
+              <div class="progress-track" role="progressbar" id="progress-bar" aria-label="Daily water intake" aria-valuemin="0" aria-valuemax="2000" aria-valuenow="0">
+                <span class="progress-fill" id="progress-fill"></span>
+              </div>
+              <p class="progress-message" id="progress-message">Every sip is a fresh start.</p>
+            </div>
+            <div class="glass-wrap" aria-hidden="true">
+              <svg class="glass" viewBox="0 0 150 190">
+                <defs><clipPath id="glass-shape"><path d="M28 20h94l-12 147a10 10 0 0 1-10 9H50a10 10 0 0 1-10-9L28 20Z"/></clipPath></defs>
+                <path class="glass-outline" d="M28 20h94l-12 147a10 10 0 0 1-10 9H50a10 10 0 0 1-10-9L28 20Z"/>
+                <g clip-path="url(#glass-shape)">
+                  <path class="water" id="glass-water" d="M20 190V190h110v0Z"/>
+                  <path class="water-shine" d="M46 40h8v108h-8z"/>
+                  <path class="water-wave" d="M20 105c16-8 26 8 44 0s27 7 44 0 24 4 25 4v14H20Z"/>
+                </g>
+                <path class="glass-rim" d="M25 20h100"/>
+                <path class="glass-tick" d="M104 64h11M107 91h8M109 118h6"/>
+              </svg>
+              <span class="glass-caption" id="glass-caption">LET'S GET SIPPING</span>
+            </div>
+          </article>
+
+          <article class="reminder-card">
+            <div class="reminder-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><path d="M16 27a2.8 2.8 0 0 0 2.7-2h-5.4a2.8 2.8 0 0 0 2.7 2Z"/><path d="M24 21H8l2.2-2.5v-5a5.8 5.8 0 0 1 11.6 0v5L24 21Z"/><path d="M13.5 8.2a3.1 3.1 0 0 1 5 0"/></svg>
+            </div>
+            <p class="eyebrow">A GENTLE NUDGE</p>
+            <h2 id="reminder-title">A little reminder?</h2>
+            <p class="reminder-description" id="reminder-description">We'll give you a friendly nudge to take a sip.</p>
+            <button class="reminder-button" id="reminder-button" type="button">
+              <span id="reminder-button-label">Turn on reminders</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4"/></svg>
+            </button>
+            <p class="reminder-note" id="reminder-note">Reminders work while this app is open.</p>
+          </article>
+        </section>
+
+        <section class="log-section" aria-labelledby="log-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">KEEP IT FLOWING</p>
+              <h2 id="log-title">Add a drink</h2>
+            </div>
+            <button class="text-button" id="custom-button" type="button">Custom amount <span aria-hidden="true">+</span></button>
+          </div>
+          <div class="drink-options">
+            <button class="drink-button" data-amount="150" type="button">
+              <span class="drink-emoji" aria-hidden="true">🥛</span><span class="drink-label">Small glass</span><strong>150 ml</strong>
+            </button>
+            <button class="drink-button featured" data-amount="250" type="button">
+              <span class="drink-emoji" aria-hidden="true">🥤</span><span class="drink-label">Glass of water</span><strong>250 ml</strong>
+            </button>
+            <button class="drink-button" data-amount="500" type="button">
+              <span class="drink-emoji" aria-hidden="true">🫙</span><span class="drink-label">Big bottle</span><strong>500 ml</strong>
+            </button>
+          </div>
+        </section>
+
+        <section class="history-section" aria-labelledby="history-title">
+          <div class="section-heading history-heading">
+            <div><p class="eyebrow">LOOK AT YOU GO</p><h2 id="history-title">Today's sips</h2></div>
+            <span class="sip-count" id="sip-count">0 drinks</span>
+          </div>
+          <div class="history-list" id="history-list" aria-live="polite"></div>
+          <p class="empty-state" id="empty-state">Your first sip is waiting for you. <span aria-hidden="true">💧</span></p>
+        </section>
+      </main>
+      <footer><span>Made for little moments of care.</span><span class="footer-drop" aria-hidden="true">✳</span></footer>
+    </div>
+
+    <dialog class="settings-dialog" id="settings-dialog" aria-labelledby="settings-title">
+      <form method="dialog" class="dialog-close-row"><button class="icon-button" aria-label="Close settings" value="close">×</button></form>
+      <p class="eyebrow">MAKE IT YOURS</p>
+      <h2 id="settings-title">Your daily rhythm</h2>
+      <form id="settings-form">
+        <label for="goal-input">Daily water goal <span>ml</span></label>
+        <input id="goal-input" name="goal" type="number" min="250" max="10000" step="50" required>
+        <label for="interval-input">Remind me every</label>
+        <select id="interval-input" name="interval">
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">1 hour 30 minutes</option>
+          <option value="120">2 hours</option>
+        </select>
+        <button class="save-button" type="submit">Save settings</button>
+      </form>
+      <p class="dialog-note">Your progress is saved on this device.</p>
+    </dialog>
+
+    <dialog class="settings-dialog custom-dialog" id="custom-dialog" aria-labelledby="custom-title">
+      <form method="dialog" class="dialog-close-row"><button class="icon-button" aria-label="Close" value="close">×</button></form>
+      <p class="eyebrow">LOG A LITTLE EXTRA</p>
+      <h2 id="custom-title">How much did you drink?</h2>
+      <form id="custom-form">
+        <label for="custom-amount">Amount <span>ml</span></label>
+        <input id="custom-amount" name="amount" type="number" min="1" max="5000" step="1" placeholder="250" required>
+        <button class="save-button" type="submit">Add to today's total</button>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
